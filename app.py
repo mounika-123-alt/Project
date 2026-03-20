@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from utils.clv import calculate_clv
 from utils.rag import AdvancedRAG
 from utils.chatbot import generate_response
@@ -9,6 +10,13 @@ st.title("💰 Customer Lifetime Value Chatbot (Offline AI)")
 
 # Response Mode
 mode = st.selectbox("Response Mode", ["Concise", "Detailed"])
+
+# API Key Configuration
+st.sidebar.header("🔑 API Configuration")
+api_key = st.sidebar.text_input("Enter your API Key", type="password")
+if api_key:
+    os.environ["API_KEY"] = api_key
+    st.sidebar.success("API Key saved!")
 
 # Sidebar CLV Calculator
 st.sidebar.header("📊 CLV Calculator")

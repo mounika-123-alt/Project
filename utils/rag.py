@@ -13,13 +13,17 @@ class AdvancedRAG:
         texts = []
 
         for file in os.listdir(folder):
-            if file.endswith(r"C:\Users\r\Downloads\CLV_Chatbot_Final_Submission.pdf"):
-                reader = PdfReader(os.path.join(folder, file))
-
-                for page in reader.pages:
-                    text = page.extract_text()
-                    if text:
-                        texts.append(text)
+            if file.endswith(".pdf"):
+                filepath = os.path.join(folder, file)
+                if os.path.getsize(filepath) > 0:
+                    try:
+                        reader = PdfReader(filepath)
+                        for page in reader.pages:
+                            text = page.extract_text()
+                            if text:
+                                texts.append(text)
+                    except Exception:
+                        pass # Ignore corrupted PDFs
 
         self.docs = texts
 
