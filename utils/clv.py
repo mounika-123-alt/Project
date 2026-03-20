@@ -1,17 +1,15 @@
-# utils/clv.py
+def calculate_clv(pf, aov, lifespan):
+    try:
+        clv = pf * aov * lifespan
 
-def calculate_metrics(df):
-    total_revenue = df["revenue"].sum()
-    total_orders = df.shape[0]
-    total_customers = df["customer_id"].nunique()
+        if clv < 5000:
+            insight = "Low value customer. Improve engagement and offers."
+        elif clv < 20000:
+            insight = "Moderate value customer. Focus on upselling."
+        else:
+            insight = "High value customer. Retain with loyalty programs."
 
-    purchase_frequency = total_orders / total_customers
-    aov = total_revenue / total_orders
+        return clv, insight
 
-    return purchase_frequency, aov
-
-
-def calculate_clv(df, lifespan=2):
-    pf, aov = calculate_metrics(df)
-    clv = pf * aov * lifespan
-    return clv, pf, aov
+    except Exception as e:
+        return 0, f"Error: {str(e)}"
